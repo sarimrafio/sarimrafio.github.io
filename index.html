@@ -3,465 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarim Sadman Rafio — Portfolio & Learning Hub</title>
-    <meta name="description" content="Applied Chemistry & Chemical Engineering | AI & Machine Learning | UI/UX Design">
-    
-    <!-- Google Fonts: Playfair Display (Serif) & Inter (Sans-Serif) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-    
-    <!-- GSAP for Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-
+    <title>Learning Hub & Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        nordic: {
+                            bg: '#f8fafc',
+                            surface: '#ffffff',
+                            text: '#334155',
+                            primary: '#0369a1', /* Icy blue */
+                            secondary: '#0f766e', /* Pine green */
+                            accent: '#e2e8f0'
+                        }
+                    },
+                    boxShadow: {
+                        'material': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                        'material-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04)'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        /* CSS Reset & Variables */
-        :root {
-            --bg-color: #080808;
-            --text-main: #f0ede6;
-            --text-muted: #888888;
-            --border-color: rgba(240, 237, 230, 0.15);
-            --card-bg: rgba(20, 20, 20, 0.6);
-            --font-sans: 'Inter', sans-serif;
-            --font-serif: 'Playfair Display', serif;
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
+        
+        /* Material Google-style Geometry Background */
+        .geom-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; pointer-events: none;
+        }
+        .shape {
+            position: absolute; filter: blur(80px); opacity: 0.4;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+        .shape-1 { width: 500px; height: 500px; background: #e0f2fe; top: -10%; left: -10%; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+        .shape-2 { width: 600px; height: 600px; background: #ccfbf1; bottom: -20%; right: -10%; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; animation-delay: -5s; }
+        .shape-3 { width: 400px; height: 400px; background: #f1f5f9; top: 40%; left: 50%; border-radius: 50%; animation-delay: -10s; }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            50% { transform: translate(30px, -50px) scale(1.05) rotate(10deg); }
+            100% { transform: translate(-20px, 20px) scale(0.95) rotate(-5deg); }
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Material Transitions */
+        .card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: var(--font-sans);
-            overflow-x: hidden;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Film Grain Overlay */
-        .grain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.4;
-            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-        }
-
-        /* Typography */
-        h1, h2, h3, h4 {
-            font-family: var(--font-serif);
-            font-weight: 400;
-        }
-
-        .label {
-            font-family: var(--font-sans);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            display: block;
-        }
-
-        a {
-            color: var(--text-main);
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-
-        a:hover {
-            opacity: 0.6;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.3s ease;
-        }
-
-        nav.scrolled {
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(8, 8, 8, 0.8);
-        }
-
-        .nav-logo {
-            font-family: var(--font-serif);
-            font-size: 1.25rem;
-            font-style: italic;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        /* Layout & Sections */
-        section {
-            padding: 8rem 5%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            align-items: center;
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 7rem);
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .hero p {
-            font-size: clamp(1rem, 2vw, 1.25rem);
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        /* About Section */
-        .grid-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: start;
-        }
-
-        .section-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            margin-bottom: 3rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 1rem;
-        }
-
-        .about-block {
-            margin-bottom: 2.5rem;
-        }
-
-        .about-block h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .about-block p {
-            color: var(--text-muted);
-            font-weight: 300;
-        }
-
-        /* Journey Section */
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .tag {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--border-color);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            letter-spacing: 0.05em;
-        }
-
-        /* Learning Hub (Cards) */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .hub-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 2.5rem;
-            transition: transform 0.4s ease, border-color 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hub-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(240, 237, 230, 0.4);
-        }
-
-        .hub-card h3 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .resource-list {
-            list-style: none;
-        }
-
-        .resource-list li {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .resource-list li::before {
-            content: '—';
-            margin-right: 10px;
-            color: var(--text-muted);
-        }
-
-        .resource-list a {
-            font-family: var(--font-sans);
-            font-weight: 300;
-            font-size: 1rem;
-            position: relative;
-        }
-
-        .resource-list a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -2px;
-            left: 0;
-            background-color: var(--text-main);
-            transition: width 0.3s ease;
-        }
-
-        .resource-list a:hover::after {
-            width: 100%;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 3rem 5%;
-            border-top: 1px solid var(--border-color);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            letter-spacing: 0.05em;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .grid-split {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .nav-links {
-                display: none; /* Can add hamburger menu later if needed */
-            }
-            section {
-                padding: 6rem 5%;
-            }
+        .card:hover {
+            transform: translateY(-4px);
         }
         
-        /* GSAP Animation Classes */
-        .fade-up { opacity: 0; transform: translateY(30px); }
-        .fade-in { opacity: 0; }
+        .tab-btn {
+            position: relative; overflow: hidden; transition: color 0.3s;
+        }
+        .tab-btn::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px;
+            background-color: #0369a1; transform: scaleX(0); transition: transform 0.3s ease;
+        }
+        .tab-btn.active { color: #0369a1; font-weight: 600; }
+        .tab-btn.active::after { transform: scaleX(1); }
+
+        /* Accordion transition */
+        .accordion-content {
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out, padding 0.4s ease;
+        }
+        .accordion-item.active .accordion-content { max-height: 500px; padding-top: 1rem; padding-bottom: 1rem; }
+        .accordion-icon { transition: transform 0.3s ease; }
+        .accordion-item.active .accordion-icon { transform: rotate(180deg); }
+        
+        .hide { display: none; }
     </style>
 </head>
-<body>
+<body class="text-nordic-text antialiased">
 
-    <div class="grain"></div>
+    <!-- Ambient Background -->
+    <div class="geom-bg">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
 
-    <nav id="navbar">
-        <div class="nav-logo">S.S. Rafio</div>
-        <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#journey">AI Journey</a>
-            <a href="#hub">Learning Hub</a>
+    <!-- Main Navigation -->
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex space-x-8">
+                    <button onclick="switchMainTab('german')" id="nav-german" class="tab-btn active inline-flex items-center px-1 pt-1 text-sm font-medium text-slate-500 hover:text-nordic-primary">
+                        <span class="material-icons mr-2 text-[20px]">language</span> German Hub
+                    </button>
+                    <button onclick="switchMainTab('science')" id="nav-science" class="tab-btn inline-flex items-center px-1 pt-1 text-sm font-medium text-slate-500 hover:text-nordic-primary">
+                        <span class="material-icons mr-2 text-[20px]">science</span> Sciences Hub
+                    </button>
+                    <button onclick="switchMainTab('portfolio')" id="nav-portfolio" class="tab-btn inline-flex items-center px-1 pt-1 text-sm font-medium text-slate-500 hover:text-nordic-primary">
+                        <span class="material-icons mr-2 text-[20px]">person</span> About Me
+                    </button>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <main>
-        <!-- HERO SECTION -->
-        <section id="hero" class="hero">
-            <div class="container">
-                <span class="label hero-label">Portfolio & Archive</span>
-                <h1 class="hero-title">Sarim Sadman Rafio</h1>
-                <p class="hero-subtitle">Applied Chemistry & Chemical Engineering | AI & Machine Learning | UI/UX Design</p>
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+        <!-- ================= GERMAN HUB ================= -->
+        <section id="german" class="main-section block fade-in">
+            <div class="mb-8 flex space-x-4 border-b border-slate-200">
+                <button onclick="switchSubTab('german', 'a1')" id="sub-german-a1" class="px-4 py-2 font-medium text-nordic-primary border-b-2 border-nordic-primary">A1 Course (20)</button>
+                <button onclick="switchSubTab('german', 'a2')" id="sub-german-a2" class="px-4 py-2 font-medium text-slate-500 hover:text-nordic-primary">A2 Course (25)</button>
+                <button onclick="switchSubTab('german', 'resources')" id="sub-german-resources" class="px-4 py-2 font-medium text-slate-500 hover:text-nordic-primary">Resources & Books</button>
+            </div>
+
+            <div id="content-german-a1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Populated by JS -->
+            </div>
+
+            <div id="content-german-a2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hide">
+                <!-- Populated by JS -->
+            </div>
+
+            <div id="content-german-resources" class="hide space-y-6">
+                <div class="bg-white rounded-xl shadow-material p-6 card">
+                    <h3 class="text-xl font-bold text-nordic-secondary mb-4 flex items-center"><span class="material-icons mr-2">library_books</span> Reference Materials</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-nordic-primary hover:underline font-medium">DW Learn German Hub</a></li>
+                        <li><a href="#" class="text-nordic-primary hover:underline font-medium">German Grammar A1 to B2 (PDF)</a></li>
+                        <li><a href="#" class="text-nordic-primary hover:underline font-medium">German Verb Drills (PDF)</a></li>
+                        <li><a href="#" class="text-nordic-primary hover:underline font-medium">Additional Lecture Notes Folder</a></li>
+                    </ul>
+                </div>
             </div>
         </section>
 
-        <!-- ABOUT ME SECTION -->
-        <section id="about">
-            <div class="container">
-                <h2 class="section-title fade-up">About Me</h2>
-                <div class="grid-split">
-                    <div class="fade-up">
-                        <p style="font-size: 1.25rem; font-family: var(--font-serif); font-style: italic; line-height: 1.8; color: var(--text-muted);">
-                            Bridging the gap between molecular science, computational intelligence, and human-centric design.
+        <!-- ================= SCIENCE HUB ================= -->
+        <section id="science" class="main-section hide fade-in">
+            <div class="mb-8 flex space-x-4 border-b border-slate-200">
+                <button onclick="switchSubTab('science', 'physics')" id="sub-science-physics" class="px-4 py-2 font-medium text-nordic-primary border-b-2 border-nordic-primary">Physics (20)</button>
+                <button onclick="switchSubTab('science', 'chemistry')" id="sub-science-chemistry" class="px-4 py-2 font-medium text-slate-500 hover:text-nordic-primary">Chemistry (10)</button>
+            </div>
+
+            <div id="content-science-physics" class="space-y-4 max-w-4xl">
+                <!-- Populated by JS Accordions -->
+            </div>
+
+            <div id="content-science-chemistry" class="space-y-4 max-w-4xl hide">
+                <!-- Populated by JS Accordions -->
+            </div>
+        </section>
+
+        <!-- ================= PORTFOLIO HUB ================= -->
+        <section id="portfolio" class="main-section hide fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Profile Card -->
+                <div class="bg-white rounded-xl shadow-material p-8 card text-center h-fit">
+                    <div class="w-32 h-32 bg-slate-200 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <span class="material-icons text-6xl text-slate-400">face</span>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800">Sarim Sadman Rafio</h2>
+                    <p class="text-nordic-secondary font-medium mt-1">Applied Chemistry & Chemical Engineering</p>
+                    <p class="text-sm text-slate-500 mt-1">University of Dhaka</p>
+                    
+                    <div class="mt-6 flex justify-center space-x-3">
+                        <a href="#" class="p-2 bg-slate-100 rounded-full text-slate-600 hover:text-nordic-primary hover:bg-slate-200 transition"><span class="material-icons">code</span></a>
+                        <a href="#" class="p-2 bg-slate-100 rounded-full text-slate-600 hover:text-nordic-primary hover:bg-slate-200 transition"><span class="material-icons">email</span></a>
+                    </div>
+                </div>
+
+                <!-- Bio & Journey -->
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-xl shadow-material p-8 card border-l-4 border-nordic-primary">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 flex items-center"><span class="material-icons mr-2 text-nordic-primary">smart_toy</span> AI & ML Journey</h3>
+                        <p class="text-slate-600 leading-relaxed">
+                            My journey in Artificial Intelligence and Machine Learning bridges my analytical background in ACCE with modern computational tools. I leverage platforms like <strong>DataCamp, Coursera, Kaggle, and Google AI Pro</strong> to build robust models. I am actively working with PyTorch and fast.ai for deep learning implementations, turning complex datasets into actionable insights.
                         </p>
                     </div>
-                    <div>
-                        <div class="about-block fade-up">
-                            <span class="label">Current Education</span>
-                            <h3>University of Dhaka</h3>
-                            <p>Department of Applied Chemistry and Chemical Engineering.</p>
-                        </div>
-                        <div class="about-block fade-up">
-                            <span class="label">Previous Education</span>
-                            <h3>Notre Dame College</h3>
-                            <p>Intermediate Science (July 2022 – June 2024).</p>
-                        </div>
-                        <div class="about-block fade-up">
-                            <span class="label">Extracurriculars & Pursuits</span>
-                            <h3>Creative & Leadership</h3>
-                            <p>Active in the Model United Nations Association. Passionate about UI/UX design (Certified by UY Lab, 2025) and urban/architectural photography.</p>
+
+                    <div class="bg-white rounded-xl shadow-material p-8 card border-l-4 border-nordic-secondary">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 flex items-center"><span class="material-icons mr-2 text-nordic-secondary">terminal</span> Computer Science & Skills</h3>
+                        <p class="text-slate-600 leading-relaxed mb-4">
+                            Beyond chemical engineering, I possess a strong foundation in computer science and software development. I specialize in <strong>Python</strong> programming—from foundational concepts to advanced data structures. 
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">Python</span>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">Machine Learning</span>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">UI/UX Design</span>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">GitHub / Git</span>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">PyTorch</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- JOURNEY SECTION -->
-        <section id="journey">
-            <div class="container">
-                <h2 class="section-title fade-up">My Journey to AI/ML</h2>
-                <div class="grid-split">
-                    <div class="fade-up">
-                        <div class="about-block">
-                            <span class="label">The Goal</span>
-                            <h3>Computational Modeling</h3>
-                            <p>Documenting my path into data science and computational modeling, applying algorithmic thinking to chemical engineering and beyond.</p>
-                        </div>
-                        <div class="about-block mt-4">
-                            <span class="label">Learning Ecosystem</span>
-                            <p>Actively developing skills and training deep learning models through <strong>DataCamp</strong>, <strong>Coursera</strong>, and <strong>Kaggle</strong>, leveraging advanced tools like <strong>Google AI Pro</strong>.</p>
-                        </div>
-                    </div>
-                    <div class="fade-up">
-                        <span class="label">Tech Stack & Frameworks</span>
-                        <div class="tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">PyTorch</span>
-                            <span class="tag">Fastai</span>
-                            <span class="tag">Google AI Pro</span>
-                            <span class="tag">Figma (UI/UX)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- LEARNING HUB SECTION -->
-        <section id="hub">
-            <div class="container">
-                <h2 class="section-title fade-up">The Learning Hub</h2>
-                <span class="label fade-up">Resource Archive</span>
-                
-                <div class="cards-grid">
-                    <!-- Physics Card -->
-                    <div class="hub-card fade-up">
-                        <h3>Physics</h3>
-                        <ul class="resource-list">
-                            <li><a href="#" target="_blank">Class Recordings (Drive)</a></li>
-                            <li><a href="#" target="_blank">Lecture Sheets (PDF)</a></li>
-                            <li><a href="#" target="_blank">Reference Book Chapters</a></li>
-                            <li><a href="#" target="_blank">Problem Sets & Solutions</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Chemistry Card -->
-                    <div class="hub-card fade-up">
-                        <h3>Chemistry</h3>
-                        <ul class="resource-list">
-                            <li><a href="#" target="_blank">Applied Chem Coursework</a></li>
-                            <li><a href="#" target="_blank">Lab Theory Videos</a></li>
-                            <li><a href="#" target="_blank">Reaction Mechanism Sheets</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- German Card -->
-                    <div class="hub-card fade-up">
-                        <h3>German (A1–B2)</h3>
-                        <ul class="resource-list">
-                            <li><a href="#" target="_blank">DW Learn German Series</a></li>
-                            <li><a href="#" target="_blank">Grammar Rulebooks (PDF)</a></li>
-                            <li><a href="#" target="_blank">Verb Conjugation Drills</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>© 2026 Sarim Sadman Rafio. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- GSAP Animation Logic -->
+    <!-- JavaScript logic to build the DOM elements -->
     <script>
-        gsap.registerPlugin(ScrollTrigger);
-
-        // 1. Hero Load Animation
-        const tl = gsap.timeline();
-        tl.to(".hero-label", { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 })
-          .to(".hero-title", { opacity: 1, y: 0, duration: 1.2, ease: "power4.out" }, "-=0.6")
-          .to(".hero-subtitle", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.8");
-
-        // 2. Scroll Animations (Fade Up)
-        const fadeElements = gsap.utils.toArray('.fade-up');
-        fadeElements.forEach(el => {
-            gsap.to(el, {
-                scrollTrigger: {
-                    trigger: el,
-                    start: "top 85%", 
-                    toggleActions: "play none none reverse"
-                },
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power3.out"
-            });
-        });
-
-        // 3. Navbar Background on Scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+        // --- DATA GENERATORS ---
+        // Generates the HTML for the German grid items
+        function createGermanCards(count, level) {
+            let html = '';
+            for(let i=1; i<=count; i++) {
+                html += `
+                <div class="bg-white rounded-xl shadow-material p-5 card flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="px-2 py-1 bg-sky-100 text-nordic-primary text-xs font-bold rounded">Lektion ${i}</span>
+                            <span class="text-xs font-semibold text-slate-400">${level}</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-800 mb-2">Lecture ${i} Title</h3>
+                        <p class="text-sm text-slate-500 mb-4">Description of the topics covered in this video lecture.</p>
+                    </div>
+                    <div class="flex space-x-2 border-t border-slate-100 pt-4">
+                        <a href="#" class="flex-1 flex justify-center items-center px-3 py-2 bg-nordic-primary text-white rounded-lg text-sm font-medium hover:bg-sky-800 transition">
+                            <span class="material-icons text-[18px] mr-1">play_circle</span> Video
+                        </a>
+                        <a href="#" class="flex-1 flex justify-center items-center px-3 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
+                            <span class="material-icons text-[18px] mr-1">picture_as_pdf</span> Notes
+                        </a>
+                    </div>
+                </div>`;
             }
-        });
+            return html;
+        }
+
+        // Generates the HTML for the Science accordions
+        function createScienceAccordions(count, subject, colorClass) {
+            let html = '';
+            for(let i=1; i<=count; i++) {
+                html += `
+                <div class="accordion-item bg-white rounded-xl shadow-material card mb-4">
+                    <button class="w-full px-6 py-4 flex justify-between items-center focus:outline-none" onclick="toggleAccordion(this)">
+                        <div class="flex items-center">
+                            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-${colorClass}-100 text-${colorClass}-700 font-bold mr-4">${i}</span>
+                            <span class="font-bold text-slate-700 text-lg">Chapter ${i}: Topic Name</span>
+                        </div>
+                        <span class="material-icons accordion-icon text-slate-400">expand_more</span>
+                    </button>
+                    <div class="accordion-content px-6 bg-slate-50/50">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="p-4 bg-white rounded-lg border border-slate-100">
+                                <h4 class="font-semibold text-sm mb-2 text-slate-700 flex items-center"><span class="material-icons text-sm mr-1">video_library</span> Classes</h4>
+                                <ul class="space-y-1 text-sm text-slate-600">
+                                    <li><a href="#" class="hover:text-nordic-primary hover:underline">• Class 1: Introduction</a></li>
+                                    <li><a href="#" class="hover:text-nordic-primary hover:underline">• Class 2: Principles</a></li>
+                                </ul>
+                            </div>
+                            <div class="p-4 bg-white rounded-lg border border-slate-100">
+                                <h4 class="font-semibold text-sm mb-2 text-slate-700 flex items-center"><span class="material-icons text-sm mr-1">link</span> Resources</h4>
+                                <ul class="space-y-1 text-sm text-slate-600">
+                                    <li><a href="#" class="hover:text-nordic-primary hover:underline">• Chapter ${i} PDF Notes</a></li>
+                                    <li><a href="#" class="hover:text-nordic-primary hover:underline">• External Website Reference</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            }
+            return html;
+        }
+
+        // --- INITIALIZATION ---
+        document.getElementById('content-german-a1').innerHTML = createGermanCards(20, 'A1');
+        document.getElementById('content-german-a2').innerHTML = createGermanCards(25, 'A2');
+        
+        // Using arbitrary Tailwind colors for science accents (emerald for physics, purple for chem just to distinguish)
+        document.getElementById('content-science-physics').innerHTML = createScienceAccordions(20, 'Physics', 'emerald');
+        document.getElementById('content-science-chemistry').innerHTML = createScienceAccordions(10, 'Chemistry', 'purple');
+
+        // --- NAVIGATION LOGIC ---
+        function switchMainTab(tabId) {
+            // Update nav buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('nav-' + tabId).classList.add('active');
+
+            // Update main sections
+            document.querySelectorAll('.main-section').forEach(sec => sec.classList.add('hide'));
+            document.getElementById(tabId).classList.remove('hide');
+        }
+
+        function switchSubTab(parent, subId) {
+            // Update sub-tabs buttons style
+            document.querySelectorAll(`[id^="sub-${parent}-"]`).forEach(btn => {
+                btn.className = "px-4 py-2 font-medium text-slate-500 hover:text-nordic-primary"; // reset
+            });
+            document.getElementById(`sub-${parent}-${subId}`).className = "px-4 py-2 font-medium text-nordic-primary border-b-2 border-nordic-primary";
+
+            // Update content visibility
+            document.querySelectorAll(`[id^="content-${parent}-"]`).forEach(content => {
+                content.classList.add('hide');
+            });
+            document.getElementById(`content-${parent}-${subId}`).classList.remove('hide');
+        }
+
+        function toggleAccordion(btn) {
+            const item = btn.parentElement;
+            // Close others (optional)
+            /*
+            item.parentElement.querySelectorAll('.accordion-item').forEach(other => {
+                if(other !== item) other.classList.remove('active');
+            });
+            */
+            item.classList.toggle('active');
+        }
     </script>
 </body>
 </html>
