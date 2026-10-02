@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning Hub & Portfolio</title>
+    <title>Sarim Sadman Rafio | German Learning Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script>
         tailwind.config = {
@@ -13,304 +13,146 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        nordic: {
-                            bg: '#f8fafc',
-                            surface: '#ffffff',
-                            text: '#334155',
-                            primary: '#0369a1', /* Icy blue */
-                            secondary: '#0f766e', /* Pine green */
-                            accent: '#e2e8f0'
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
                         }
-                    },
-                    boxShadow: {
-                        'material': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
-                        'material-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04)'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; overflow-x: hidden; }
-        
-        /* Material Google-style Geometry Background */
-        .geom-bg {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; overflow: hidden; pointer-events: none;
-        }
-        .shape {
-            position: absolute; filter: blur(80px); opacity: 0.4;
-            animation: float 20s infinite alternate ease-in-out;
-        }
-        .shape-1 { width: 500px; height: 500px; background: #e0f2fe; top: -10%; left: -10%; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-        .shape-2 { width: 600px; height: 600px; background: #ccfbf1; bottom: -20%; right: -10%; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; animation-delay: -5s; }
-        .shape-3 { width: 400px; height: 400px; background: #f1f5f9; top: 40%; left: 50%; border-radius: 50%; animation-delay: -10s; }
-        
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
-            50% { transform: translate(30px, -50px) scale(1.05) rotate(10deg); }
-            100% { transform: translate(-20px, 20px) scale(0.95) rotate(-5deg); }
-        }
-
-        /* Material Transitions */
-        .card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .card:hover {
-            transform: translateY(-4px);
-        }
-        
-        .tab-btn {
-            position: relative; overflow: hidden; transition: color 0.3s;
-        }
-        .tab-btn::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px;
-            background-color: #0369a1; transform: scaleX(0); transition: transform 0.3s ease;
-        }
-        .tab-btn.active { color: #0369a1; font-weight: 600; }
-        .tab-btn.active::after { transform: scaleX(1); }
-
-        /* Accordion transition */
-        .accordion-content {
-            max-height: 0; overflow: hidden; transition: max-height 0.4s ease-in-out, padding 0.4s ease;
-        }
-        .accordion-item.active .accordion-content { max-height: 500px; padding-top: 1rem; padding-bottom: 1rem; }
-        .accordion-icon { transition: transform 0.3s ease; }
-        .accordion-item.active .accordion-icon { transform: rotate(180deg); }
-        
+        body { background-color: #f8fafc; overflow-y: scroll; }
+        .tab-active { border-bottom: 2px solid #0ea5e9; color: #0284c7; font-weight: 600; }
+        .tab-inactive { color: #64748b; font-weight: 500; }
+        .tab-inactive:hover { color: #0ea5e9; }
         .hide { display: none; }
+        .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
-<body class="text-nordic-text antialiased">
+<body class="text-slate-800 antialiased">
 
-    <!-- Ambient Background -->
-    <div class="geom-bg">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-    </div>
-
-    <!-- Main Navigation -->
-    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex space-x-8">
-                    <button onclick="switchMainTab('german')" id="nav-german" class="tab-btn active inline-flex items-center px-1 pt-1 text-sm font-medium text-slate-500 hover:text-nordic-primary">
-                        <span class="material-icons mr-2 text-[20px]">language</span> German Hub
-                    </button>
-                    <button onclick="switchMainTab('science')" id="nav-science" class="tab-btn inline-flex items-center px-1 pt-1 text-sm font-medium text-slate-500 hover:text-nordic-primary">
-                        <span class="material-icons mr-2 text-[20px]">science</span> Sciences Hub
-                    </button>
-                    <button onclick="switchMainTab('portfolio')" id="nav-portfolio" class="tab-btn inline-flex items-center px-1 pt-1 text-sm font-medium text-slate-500 hover:text-nordic-primary">
-                        <span class="material-icons mr-2 text-[20px]">person</span> About Me
-                    </button>
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-brand-900 flex items-center">
+                        <span class="material-icons mr-2 text-brand-500">language</span>
+                        German Learning Hub
+                    </h1>
+                    <p class="text-sm text-slate-500 mt-1">Curated A1 & A2 Curriculum Resources</p>
+                </div>
+                <div class="text-sm font-medium text-slate-400 bg-slate-100 px-3 py-1 rounded-full">
+                    46 Total Lessons
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- MAIN CONTAINER -->
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Navigation Tabs -->
+        <div class="flex space-x-6 border-b border-slate-200 mb-8">
+            <button onclick="switchTab('a1')" id="tab-a1" class="pb-3 px-2 tab-active text-lg flex items-center">
+                A1 Course <span class="ml-2 bg-brand-100 text-brand-600 text-xs py-0.5 px-2 rounded-full">20</span>
+            </button>
+            <button onclick="switchTab('a2')" id="tab-a2" class="pb-3 px-2 tab-inactive text-lg flex items-center">
+                A2 Course <span class="ml-2 bg-slate-100 text-slate-500 text-xs py-0.5 px-2 rounded-full" id="badge-a2">26</span>
+            </button>
+        </div>
 
-        <!-- ================= GERMAN HUB ================= -->
-        <section id="german" class="main-section block fade-in">
-            <div class="mb-8 flex space-x-4 border-b border-slate-200">
-                <button onclick="switchSubTab('german', 'a1')" id="sub-german-a1" class="px-4 py-2 font-medium text-nordic-primary border-b-2 border-nordic-primary">A1 Course (20)</button>
-                <button onclick="switchSubTab('german', 'a2')" id="sub-german-a2" class="px-4 py-2 font-medium text-slate-500 hover:text-nordic-primary">A2 Course (25)</button>
-                <button onclick="switchSubTab('german', 'resources')" id="sub-german-resources" class="px-4 py-2 font-medium text-slate-500 hover:text-nordic-primary">Resources & Books</button>
-            </div>
+        <!-- A1 Grid -->
+        <div id="grid-a1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Populated by JS -->
+        </div>
 
-            <div id="content-german-a1" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Populated by JS -->
-            </div>
-
-            <div id="content-german-a2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hide">
-                <!-- Populated by JS -->
-            </div>
-
-            <div id="content-german-resources" class="hide space-y-6">
-                <div class="bg-white rounded-xl shadow-material p-6 card">
-                    <h3 class="text-xl font-bold text-nordic-secondary mb-4 flex items-center"><span class="material-icons mr-2">library_books</span> Reference Materials</h3>
-                    <ul class="space-y-3">
-                        <li><a href="#" class="text-nordic-primary hover:underline font-medium">DW Learn German Hub</a></li>
-                        <li><a href="#" class="text-nordic-primary hover:underline font-medium">German Grammar A1 to B2 (PDF)</a></li>
-                        <li><a href="#" class="text-nordic-primary hover:underline font-medium">German Verb Drills (PDF)</a></li>
-                        <li><a href="#" class="text-nordic-primary hover:underline font-medium">Additional Lecture Notes Folder</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- ================= SCIENCE HUB ================= -->
-        <section id="science" class="main-section hide fade-in">
-            <div class="mb-8 flex space-x-4 border-b border-slate-200">
-                <button onclick="switchSubTab('science', 'physics')" id="sub-science-physics" class="px-4 py-2 font-medium text-nordic-primary border-b-2 border-nordic-primary">Physics (20)</button>
-                <button onclick="switchSubTab('science', 'chemistry')" id="sub-science-chemistry" class="px-4 py-2 font-medium text-slate-500 hover:text-nordic-primary">Chemistry (10)</button>
-            </div>
-
-            <div id="content-science-physics" class="space-y-4 max-w-4xl">
-                <!-- Populated by JS Accordions -->
-            </div>
-
-            <div id="content-science-chemistry" class="space-y-4 max-w-4xl hide">
-                <!-- Populated by JS Accordions -->
-            </div>
-        </section>
-
-        <!-- ================= PORTFOLIO HUB ================= -->
-        <section id="portfolio" class="main-section hide fade-in">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Profile Card -->
-                <div class="bg-white rounded-xl shadow-material p-8 card text-center h-fit">
-                    <div class="w-32 h-32 bg-slate-200 rounded-full mx-auto mb-4 flex items-center justify-center">
-                        <span class="material-icons text-6xl text-slate-400">face</span>
-                    </div>
-                    <h2 class="text-2xl font-bold text-slate-800">Sarim Sadman Rafio</h2>
-                    <p class="text-nordic-secondary font-medium mt-1">Applied Chemistry & Chemical Engineering</p>
-                    <p class="text-sm text-slate-500 mt-1">University of Dhaka</p>
-                    
-                    <div class="mt-6 flex justify-center space-x-3">
-                        <a href="#" class="p-2 bg-slate-100 rounded-full text-slate-600 hover:text-nordic-primary hover:bg-slate-200 transition"><span class="material-icons">code</span></a>
-                        <a href="#" class="p-2 bg-slate-100 rounded-full text-slate-600 hover:text-nordic-primary hover:bg-slate-200 transition"><span class="material-icons">email</span></a>
-                    </div>
-                </div>
-
-                <!-- Bio & Journey -->
-                <div class="lg:col-span-2 space-y-6">
-                    <div class="bg-white rounded-xl shadow-material p-8 card border-l-4 border-nordic-primary">
-                        <h3 class="text-xl font-bold text-slate-800 mb-3 flex items-center"><span class="material-icons mr-2 text-nordic-primary">smart_toy</span> AI & ML Journey</h3>
-                        <p class="text-slate-600 leading-relaxed">
-                            My journey in Artificial Intelligence and Machine Learning bridges my analytical background in ACCE with modern computational tools. I leverage platforms like <strong>DataCamp, Coursera, Kaggle, and Google AI Pro</strong> to build robust models. I am actively working with PyTorch and fast.ai for deep learning implementations, turning complex datasets into actionable insights.
-                        </p>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-material p-8 card border-l-4 border-nordic-secondary">
-                        <h3 class="text-xl font-bold text-slate-800 mb-3 flex items-center"><span class="material-icons mr-2 text-nordic-secondary">terminal</span> Computer Science & Skills</h3>
-                        <p class="text-slate-600 leading-relaxed mb-4">
-                            Beyond chemical engineering, I possess a strong foundation in computer science and software development. I specialize in <strong>Python</strong> programming—from foundational concepts to advanced data structures. 
-                        </p>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">Python</span>
-                            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">Machine Learning</span>
-                            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">UI/UX Design</span>
-                            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">GitHub / Git</span>
-                            <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm font-medium">PyTorch</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- A2 Grid -->
+        <div id="grid-a2" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 hide">
+            <!-- Populated by JS -->
+        </div>
 
     </main>
 
-    <!-- JavaScript logic to build the DOM elements -->
     <script>
-        // --- DATA GENERATORS ---
-        // Generates the HTML for the German grid items
-        function createGermanCards(count, level) {
+        // --- 1. A1 DATA (20 Items) ---
+        // Fill in your specific links inside the quotation marks for each lesson.
+        const a1Lessons = [
+            { title: "Lesson 1", desc: "Introductions & Greetings", video: "YOUR_DRIVE_LINK_HERE", pdf: "YOUR_PDF_LINK_HERE" },
+            { title: "Lesson 2", desc: "Alphabets & Numbers", video: "YOUR_DRIVE_LINK_HERE", pdf: "YOUR_PDF_LINK_HERE" },
+            { title: "Lesson 3", desc: "Basic Grammar", video: "YOUR_DRIVE_LINK_HERE", pdf: "YOUR_PDF_LINK_HERE" },
+            // To quickly add the rest of the 20, just copy and paste the line above and change the links.
+            // ... add lessons 4 through 20 here.
+        ];
+
+        // --- 2. A2 DATA (26 Items) ---
+        const a2Lessons = [
+            { title: "Lesson 1", desc: "Advanced Grammar", video: "YOUR_DRIVE_LINK_HERE", pdf: "YOUR_PDF_LINK_HERE" },
+            { title: "Lesson 2", desc: "Complex Sentences", video: "YOUR_DRIVE_LINK_HERE", pdf: "YOUR_PDF_LINK_HERE" },
+            // ... add lessons 3 through 26 here.
+        ];
+
+        // --- 3. HTML GENERATOR ---
+        // This function builds a card for every item in your arrays
+        function renderCards(dataArray, containerId, levelLabel) {
+            const container = document.getElementById(containerId);
             let html = '';
-            for(let i=1; i<=count; i++) {
+            
+            dataArray.forEach((lesson, index) => {
+                let lessonNumber = index + 1;
                 html += `
-                <div class="bg-white rounded-xl shadow-material p-5 card flex flex-col justify-between">
+                <div class="bg-white border border-slate-200 rounded-xl p-5 card-hover flex flex-col justify-between h-full">
                     <div>
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="px-2 py-1 bg-sky-100 text-nordic-primary text-xs font-bold rounded">Lektion ${i}</span>
-                            <span class="text-xs font-semibold text-slate-400">${level}</span>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="bg-brand-50 text-brand-600 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">
+                                ${levelLabel} • Lektion ${lessonNumber}
+                            </span>
                         </div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-2">Lecture ${i} Title</h3>
-                        <p class="text-sm text-slate-500 mb-4">Description of the topics covered in this video lecture.</p>
+                        <h3 class="text-lg font-bold text-slate-800 mb-1">${lesson.title}</h3>
+                        <p class="text-sm text-slate-500 mb-5">${lesson.desc}</p>
                     </div>
-                    <div class="flex space-x-2 border-t border-slate-100 pt-4">
-                        <a href="#" class="flex-1 flex justify-center items-center px-3 py-2 bg-nordic-primary text-white rounded-lg text-sm font-medium hover:bg-sky-800 transition">
+                    
+                    <div class="grid grid-cols-2 gap-2 mt-auto pt-4 border-t border-slate-100">
+                        <a href="${lesson.video}" target="_blank" class="flex justify-center items-center py-2 bg-brand-600 hover:bg-brand-500 text-white rounded-lg text-sm font-medium transition">
                             <span class="material-icons text-[18px] mr-1">play_circle</span> Video
                         </a>
-                        <a href="#" class="flex-1 flex justify-center items-center px-3 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition">
-                            <span class="material-icons text-[18px] mr-1">picture_as_pdf</span> Notes
+                        <a href="${lesson.pdf}" target="_blank" class="flex justify-center items-center py-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm font-medium transition">
+                            <span class="material-icons text-[18px] mr-1">picture_as_pdf</span> PDF
                         </a>
                     </div>
                 </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // --- 4. INITIALIZATION & TAB SWITCHING ---
+        // Render the grids on page load
+        renderCards(a1Lessons, 'grid-a1', 'A1');
+        renderCards(a2Lessons, 'grid-a2', 'A2');
+
+        function switchTab(level) {
+            // Handle Tabs
+            document.getElementById('tab-a1').className = "pb-3 px-2 tab-inactive text-lg flex items-center";
+            document.getElementById('tab-a2').className = "pb-3 px-2 tab-inactive text-lg flex items-center";
+            document.getElementById('badge-a2').className = "ml-2 bg-slate-100 text-slate-500 text-xs py-0.5 px-2 rounded-full";
+            
+            if (level === 'a1') {
+                document.getElementById('tab-a1').className = "pb-3 px-2 tab-active text-lg flex items-center";
+            } else {
+                document.getElementById('tab-a2').className = "pb-3 px-2 tab-active text-lg flex items-center";
+                document.getElementById('badge-a2').className = "ml-2 bg-brand-100 text-brand-600 text-xs py-0.5 px-2 rounded-full";
             }
-            return html;
-        }
 
-        // Generates the HTML for the Science accordions
-        function createScienceAccordions(count, subject, colorClass) {
-            let html = '';
-            for(let i=1; i<=count; i++) {
-                html += `
-                <div class="accordion-item bg-white rounded-xl shadow-material card mb-4">
-                    <button class="w-full px-6 py-4 flex justify-between items-center focus:outline-none" onclick="toggleAccordion(this)">
-                        <div class="flex items-center">
-                            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-${colorClass}-100 text-${colorClass}-700 font-bold mr-4">${i}</span>
-                            <span class="font-bold text-slate-700 text-lg">Chapter ${i}: Topic Name</span>
-                        </div>
-                        <span class="material-icons accordion-icon text-slate-400">expand_more</span>
-                    </button>
-                    <div class="accordion-content px-6 bg-slate-50/50">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="p-4 bg-white rounded-lg border border-slate-100">
-                                <h4 class="font-semibold text-sm mb-2 text-slate-700 flex items-center"><span class="material-icons text-sm mr-1">video_library</span> Classes</h4>
-                                <ul class="space-y-1 text-sm text-slate-600">
-                                    <li><a href="#" class="hover:text-nordic-primary hover:underline">• Class 1: Introduction</a></li>
-                                    <li><a href="#" class="hover:text-nordic-primary hover:underline">• Class 2: Principles</a></li>
-                                </ul>
-                            </div>
-                            <div class="p-4 bg-white rounded-lg border border-slate-100">
-                                <h4 class="font-semibold text-sm mb-2 text-slate-700 flex items-center"><span class="material-icons text-sm mr-1">link</span> Resources</h4>
-                                <ul class="space-y-1 text-sm text-slate-600">
-                                    <li><a href="#" class="hover:text-nordic-primary hover:underline">• Chapter ${i} PDF Notes</a></li>
-                                    <li><a href="#" class="hover:text-nordic-primary hover:underline">• External Website Reference</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-            }
-            return html;
-        }
-
-        // --- INITIALIZATION ---
-        document.getElementById('content-german-a1').innerHTML = createGermanCards(20, 'A1');
-        document.getElementById('content-german-a2').innerHTML = createGermanCards(25, 'A2');
-        
-        // Using arbitrary Tailwind colors for science accents (emerald for physics, purple for chem just to distinguish)
-        document.getElementById('content-science-physics').innerHTML = createScienceAccordions(20, 'Physics', 'emerald');
-        document.getElementById('content-science-chemistry').innerHTML = createScienceAccordions(10, 'Chemistry', 'purple');
-
-        // --- NAVIGATION LOGIC ---
-        function switchMainTab(tabId) {
-            // Update nav buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('nav-' + tabId).classList.add('active');
-
-            // Update main sections
-            document.querySelectorAll('.main-section').forEach(sec => sec.classList.add('hide'));
-            document.getElementById(tabId).classList.remove('hide');
-        }
-
-        function switchSubTab(parent, subId) {
-            // Update sub-tabs buttons style
-            document.querySelectorAll(`[id^="sub-${parent}-"]`).forEach(btn => {
-                btn.className = "px-4 py-2 font-medium text-slate-500 hover:text-nordic-primary"; // reset
-            });
-            document.getElementById(`sub-${parent}-${subId}`).className = "px-4 py-2 font-medium text-nordic-primary border-b-2 border-nordic-primary";
-
-            // Update content visibility
-            document.querySelectorAll(`[id^="content-${parent}-"]`).forEach(content => {
-                content.classList.add('hide');
-            });
-            document.getElementById(`content-${parent}-${subId}`).classList.remove('hide');
-        }
-
-        function toggleAccordion(btn) {
-            const item = btn.parentElement;
-            // Close others (optional)
-            /*
-            item.parentElement.querySelectorAll('.accordion-item').forEach(other => {
-                if(other !== item) other.classList.remove('active');
-            });
-            */
-            item.classList.toggle('active');
+            // Handle Grids
+            document.getElementById('grid-a1').classList.add('hide');
+            document.getElementById('grid-a2').classList.add('hide');
+            document.getElementById('grid-' + level).classList.remove('hide');
         }
     </script>
 </body>
