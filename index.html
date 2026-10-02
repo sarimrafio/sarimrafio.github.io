@@ -3,279 +3,465 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarim Sadman Rafio | Learning Portal</title>
+    <title>Sarim Sadman Rafio — Portfolio & Learning Hub</title>
+    <meta name="description" content="Applied Chemistry & Chemical Engineering | AI & Machine Learning | UI/UX Design">
+    
+    <!-- Google Fonts: Playfair Display (Serif) & Inter (Sans-Serif) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
+        /* CSS Reset & Variables */
         :root {
-            --primary: #1A365D;
-            --secondary: #2B6CB0;
-            --accent: #E2E8F0;
-            --text-dark: #2D3748;
-            --text-light: #718096;
-            --bg-main: #F7FAFC;
+            --bg-color: #080808;
+            --text-main: #f0ede6;
+            --text-muted: #888888;
+            --border-color: rgba(240, 237, 230, 0.15);
+            --card-bg: rgba(20, 20, 20, 0.6);
+            --font-sans: 'Inter', sans-serif;
+            --font-serif: 'Playfair Display', serif;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-dark);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Film Grain Overlay */
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.4;
+            background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 400;
+        }
+
+        .label {
+            font-family: var(--font-sans);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        a {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        a:hover {
+            opacity: 0.6;
         }
 
         /* Navigation */
         nav {
-            background-color: white;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 1000;
+            width: 100%;
+            padding: 2rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
         }
 
-        .nav-brand {
+        nav.scrolled {
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(8, 8, 8, 0.8);
+        }
+
+        .nav-logo {
+            font-family: var(--font-serif);
             font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--primary);
+            font-style: italic;
         }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            margin-left: 1.5rem;
-            font-weight: 500;
-            transition: color 0.2s;
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
-        .nav-links a:hover {
-            color: var(--secondary);
+        /* Layout & Sections */
+        section {
+            padding: 8rem 5%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
         }
 
         /* Hero Section */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 5rem 2rem;
+        .hero {
             text-align: center;
+            align-items: center;
         }
 
-        header h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        header p {
-            font-size: 1.25rem;
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-muted);
             max-width: 600px;
             margin: 0 auto;
-            opacity: 0.9;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        /* Container */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        section {
-            margin-bottom: 4rem;
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
-
-        h2 {
-            color: var(--primary);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--accent);
-        }
-
-        h3 {
-            color: var(--secondary);
-            margin: 1.5rem 0 0.5rem 0;
-        }
-
-        /* Class Resource Cards */
-        .resource-grid {
+        /* About Section */
+        .grid-split {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
         }
 
-        .resource-card {
-            border: 1px solid var(--accent);
-            border-radius: 8px;
-            padding: 1.5rem;
-            background: #FAFAFA;
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
         }
 
-        .resource-card ul {
-            list-style: none;
+        .about-block {
+            margin-bottom: 2.5rem;
+        }
+
+        .about-block h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-block p {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* Journey Section */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
             margin-top: 1rem;
         }
 
-        .resource-card li {
-            margin-bottom: 0.75rem;
+        .tag {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* Learning Hub (Cards) */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .hub-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            transition: transform 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hub-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(240, 237, 230, 0.4);
+        }
+
+        .hub-card h3 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .resource-list {
+            list-style: none;
+        }
+
+        .resource-list li {
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
         }
 
-        .resource-card a {
-            text-decoration: none;
-            color: var(--secondary);
-            font-weight: 500;
-            display: inline-block;
-            margin-left: 0.5rem;
+        .resource-list li::before {
+            content: '—';
+            margin-right: 10px;
+            color: var(--text-muted);
         }
 
-        .resource-card a:hover {
-            text-decoration: underline;
+        .resource-list a {
+            font-family: var(--font-sans);
+            font-weight: 300;
+            font-size: 1rem;
+            position: relative;
         }
 
-        /* Tags */
-        .tag {
-            display: inline-block;
-            background: var(--accent);
-            color: var(--text-dark);
-            padding: 0.25rem 0.75rem;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            margin-right: 0.5rem;
-            margin-bottom: 0.5rem;
+        .resource-list a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--text-main);
+            transition: width 0.3s ease;
+        }
+
+        .resource-list a:hover::after {
+            width: 100%;
         }
 
         /* Footer */
         footer {
             text-align: center;
-            padding: 2rem;
-            color: var(--text-light);
-            background: white;
-            border-top: 1px solid var(--accent);
+            padding: 3rem 5%;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
         }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-split {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .nav-links {
+                display: none; /* Can add hamburger menu later if needed */
+            }
+            section {
+                padding: 6rem 5%;
+            }
+        }
+        
+        /* GSAP Animation Classes */
+        .fade-up { opacity: 0; transform: translateY(30px); }
+        .fade-in { opacity: 0; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="nav-brand">Learning Hub</div>
+    <div class="grain"></div>
+
+    <nav id="navbar">
+        <div class="nav-logo">S.S. Rafio</div>
         <div class="nav-links">
-            <a href="#about">About Me</a>
-            <a href="#journey">AI/ML Journey</a>
-            <a href="#physics">Physics</a>
-            <a href="#chemistry">Chemistry</a>
-            <a href="#german">German</a>
+            <a href="#about">About</a>
+            <a href="#journey">AI Journey</a>
+            <a href="#hub">Learning Hub</a>
         </div>
     </nav>
 
-    <header>
-        <h1>Sarim Sadman Rafio</h1>
-        <p>Academic Resources, Lecture Archives, and My Engineering Journey</p>
-    </header>
+    <main>
+        <!-- HERO SECTION -->
+        <section id="hero" class="hero">
+            <div class="container">
+                <span class="label hero-label">Portfolio & Archive</span>
+                <h1 class="hero-title">Sarim Sadman Rafio</h1>
+                <p class="hero-subtitle">Applied Chemistry & Chemical Engineering | AI & Machine Learning | UI/UX Design</p>
+            </div>
+        </section>
 
-    <div class="container">
-        
-        <!-- About Me Section -->
+        <!-- ABOUT ME SECTION -->
         <section id="about">
-            <h2>About Me</h2>
-            <p>I study in the Department of Applied Chemistry and Chemical Engineering at the University of Dhaka. Prior to my university studies, I attended Notre Dame College for Intermediate Science from July 2022 to June 2024. This platform serves as a central repository for my coursework, lecture notes, and study materials, designed to keep academic resources highly organized and accessible.</p>
+            <div class="container">
+                <h2 class="section-title fade-up">About Me</h2>
+                <div class="grid-split">
+                    <div class="fade-up">
+                        <p style="font-size: 1.25rem; font-family: var(--font-serif); font-style: italic; line-height: 1.8; color: var(--text-muted);">
+                            Bridging the gap between molecular science, computational intelligence, and human-centric design.
+                        </p>
+                    </div>
+                    <div>
+                        <div class="about-block fade-up">
+                            <span class="label">Current Education</span>
+                            <h3>University of Dhaka</h3>
+                            <p>Department of Applied Chemistry and Chemical Engineering.</p>
+                        </div>
+                        <div class="about-block fade-up">
+                            <span class="label">Previous Education</span>
+                            <h3>Notre Dame College</h3>
+                            <p>Intermediate Science (July 2022 – June 2024).</p>
+                        </div>
+                        <div class="about-block fade-up">
+                            <span class="label">Extracurriculars & Pursuits</span>
+                            <h3>Creative & Leadership</h3>
+                            <p>Active in the Model United Nations Association. Passionate about UI/UX design (Certified by UY Lab, 2025) and urban/architectural photography.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
-        <!-- AI/ML Journey Section -->
+        <!-- JOURNEY SECTION -->
         <section id="journey">
-            <h2>My Journey to Becoming an AI/ML Engineer</h2>
-            <p>My transition into artificial intelligence and machine learning is driven by a deep interest in computational modeling and data science.</p>
-            <ul>
-                <li><strong>Foundations & Structured Learning:</strong> I actively utilize platforms including DataCamp, Coursera, and Kaggle to build my expertise in data science and machine learning.</li>
-                <li><strong>Advanced Frameworks:</strong> My technical study involves working with resources like PyTorch and Fastai to understand deep learning applications.</li>
-                <li><strong>Continuous Growth:</strong> To accelerate my learning and access advanced computational tools, I subscribed to Google AI Pro in August 2026.</li>
-            </ul>
-        </section>
-
-        <!-- Physics Lectures Section -->
-        <section id="physics">
-            <h2>Physics Lectures & Resources</h2>
-            <p>Access class recordings, lecture sheets, and reference materials for Physics.</p>
-            
-            <div class="resource-grid">
-                <!-- Class Card 1 -->
-                <div class="resource-card">
-                    <h3>Class 01: Mechanics</h3>
-                    <span class="tag">Oct 15</span> <span class="tag">Chapter 1</span>
-                    <ul>
-                        <li>🎥 <a href="YOUR_GOOGLE_DRIVE_VIDEO_LINK_HERE" target="_blank">Watch Class Recording</a></li>
-                        <li>📄 <a href="YOUR_LECTURE_SHEET_LINK_HERE" target="_blank">Lecture Sheet (PDF)</a></li>
-                        <li>📚 <a href="YOUR_BOOK_PDF_LINK_HERE" target="_blank">Reference Book Chapter</a></li>
-                        <li>🔗 <a href="#" target="_blank">Extra Problem Set</a></li>
-                    </ul>
-                </div>
-
-                <!-- Class Card 2 -->
-                <div class="resource-card">
-                    <h3>Class 02: Thermodynamics</h3>
-                    <span class="tag">Oct 22</span> <span class="tag">Chapter 2</span>
-                    <ul>
-                        <li>🎥 <a href="YOUR_GOOGLE_DRIVE_VIDEO_LINK_HERE" target="_blank">Watch Class Recording</a></li>
-                        <li>📄 <a href="YOUR_LECTURE_SHEET_LINK_HERE" target="_blank">Lecture Sheet (PDF)</a></li>
-                        <li>📚 <a href="YOUR_BOOK_PDF_LINK_HERE" target="_blank">Reference Book Chapter</a></li>
-                    </ul>
+            <div class="container">
+                <h2 class="section-title fade-up">My Journey to AI/ML</h2>
+                <div class="grid-split">
+                    <div class="fade-up">
+                        <div class="about-block">
+                            <span class="label">The Goal</span>
+                            <h3>Computational Modeling</h3>
+                            <p>Documenting my path into data science and computational modeling, applying algorithmic thinking to chemical engineering and beyond.</p>
+                        </div>
+                        <div class="about-block mt-4">
+                            <span class="label">Learning Ecosystem</span>
+                            <p>Actively developing skills and training deep learning models through <strong>DataCamp</strong>, <strong>Coursera</strong>, and <strong>Kaggle</strong>, leveraging advanced tools like <strong>Google AI Pro</strong>.</p>
+                        </div>
+                    </div>
+                    <div class="fade-up">
+                        <span class="label">Tech Stack & Frameworks</span>
+                        <div class="tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">PyTorch</span>
+                            <span class="tag">Fastai</span>
+                            <span class="tag">Google AI Pro</span>
+                            <span class="tag">Figma (UI/UX)</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Chemistry Lectures Section -->
-        <section id="chemistry">
-            <h2>Chemistry Lectures & Resources</h2>
-            <p>Materials and recordings for Applied Chemistry coursework.</p>
+        <!-- LEARNING HUB SECTION -->
+        <section id="hub">
+            <div class="container">
+                <h2 class="section-title fade-up">The Learning Hub</h2>
+                <span class="label fade-up">Resource Archive</span>
+                
+                <div class="cards-grid">
+                    <!-- Physics Card -->
+                    <div class="hub-card fade-up">
+                        <h3>Physics</h3>
+                        <ul class="resource-list">
+                            <li><a href="#" target="_blank">Class Recordings (Drive)</a></li>
+                            <li><a href="#" target="_blank">Lecture Sheets (PDF)</a></li>
+                            <li><a href="#" target="_blank">Reference Book Chapters</a></li>
+                            <li><a href="#" target="_blank">Problem Sets & Solutions</a></li>
+                        </ul>
+                    </div>
 
-            <div class="resource-grid">
-                <!-- Class Card 1 -->
-                <div class="resource-card">
-                    <h3>Class 01: Organic Synthesis</h3>
-                    <span class="tag">Lab Theory</span>
-                    <ul>
-                        <li>🎥 <a href="YOUR_GOOGLE_DRIVE_VIDEO_LINK_HERE" target="_blank">Watch Class Recording</a></li>
-                        <li>📄 <a href="YOUR_LECTURE_SHEET_LINK_HERE" target="_blank">Reaction Mechanisms Sheet</a></li>
-                        <li>📚 <a href="YOUR_BOOK_PDF_LINK_HERE" target="_blank">Textbook Reference</a></li>
-                    </ul>
+                    <!-- Chemistry Card -->
+                    <div class="hub-card fade-up">
+                        <h3>Chemistry</h3>
+                        <ul class="resource-list">
+                            <li><a href="#" target="_blank">Applied Chem Coursework</a></li>
+                            <li><a href="#" target="_blank">Lab Theory Videos</a></li>
+                            <li><a href="#" target="_blank">Reaction Mechanism Sheets</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- German Card -->
+                    <div class="hub-card fade-up">
+                        <h3>German (A1–B2)</h3>
+                        <ul class="resource-list">
+                            <li><a href="#" target="_blank">DW Learn German Series</a></li>
+                            <li><a href="#" target="_blank">Grammar Rulebooks (PDF)</a></li>
+                            <li><a href="#" target="_blank">Verb Conjugation Drills</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
-
-        <!-- German Language Section -->
-        <section id="german">
-            <h2>German Lecture Playlist</h2>
-            <p>Resources and structured study materials for learning the German language.</p>
-            
-            <div class="resource-grid">
-                <div class="resource-card">
-                    <h3>Grammar & Vocabulary</h3>
-                    <span class="tag">A1 - B2 Level</span>
-                    <ul>
-                        <li>🎥 <a href="YOUR_GOOGLE_DRIVE_VIDEO_LINK_HERE" target="_blank">DW Learn German Resources</a></li>
-                        <li>📄 <a href="YOUR_LECTURE_SHEET_LINK_HERE" target="_blank">German Grammar A1 to B2 (PDF)</a></li>
-                        <li>📚 <a href="YOUR_BOOK_PDF_LINK_HERE" target="_blank">German Verb Drills</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-    </div>
+    </main>
 
     <footer>
-        <p>&copy; 2026 Sarim Sadman Rafio. All rights reserved.</p>
+        <div class="container">
+            <p>© 2026 Sarim Sadman Rafio. All rights reserved.</p>
+        </div>
     </footer>
 
+    <!-- GSAP Animation Logic -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Hero Load Animation
+        const tl = gsap.timeline();
+        tl.to(".hero-label", { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.2 })
+          .to(".hero-title", { opacity: 1, y: 0, duration: 1.2, ease: "power4.out" }, "-=0.6")
+          .to(".hero-subtitle", { opacity: 1, y: 0, duration: 1, ease: "power3.out" }, "-=0.8");
+
+        // 2. Scroll Animations (Fade Up)
+        const fadeElements = gsap.utils.toArray('.fade-up');
+        fadeElements.forEach(el => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%", 
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // 3. Navbar Background on Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
