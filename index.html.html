@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarim Sadman Rafio | Learning Portal</title>
+    <style>
+        :root {
+            --primary: #1A365D;
+            --secondary: #2B6CB0;
+            --accent: #E2E8F0;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            --bg-main: #F7FAFC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            margin-left: 1.5rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 0.5rem 0;
+        }
+
+        /* Class Resource Cards */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .resource-card {
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 1.5rem;
+            background: #FAFAFA;
+        }
+
+        .resource-card ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .resource-card li {
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .resource-card a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .resource-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Tags */
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--text-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+            background: white;
+            border-top: 1px solid var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">Learning Hub</div>
+        <div class="nav-links">
+            <a href="#about">About Me</a>
+            <a href="#journey">AI/ML Journey</a>
+            <a href="#physics">Physics</a>
+            <a href="#chemistry">Chemistry</a>
+            <a href="#german">German</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>Sarim Sadman Rafio</h1>
+        <p>Academic Resources, Lecture Archives, and My Engineering Journey</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- About Me Section -->
+        <section id="about">
+            <h2>About Me</h2>
+            <p>I study in the Department of Applied Chemistry and Chemical Engineering at the University of Dhaka. Prior to my university studies, I attended Notre Dame College for Intermediate Science from July 2022 to June 2024. This platform serves as a central repository for my coursework, lecture notes, and study materials, designed to keep academic resources highly organized and accessible.</p>
+        </section>
+
+        <!-- AI/ML Journey Section -->
+        <section id="journey">
+            <h2>My Journey to Becoming an AI/ML Engineer</h2>
+            <p>My transition into artificial intelligence and machine learning is driven by a deep interest in computational modeling and data science.</p>
+            <ul>
+                <li><strong>Foundations & Structured Learning:</strong> I actively utilize platforms including DataCamp, Coursera, and Kaggle to build my expertise in data science and machine learning.</li>
+                <li><strong>Advanced Frameworks:</strong> My technical study involves working with resources like PyTorch and Fastai to understand deep learning applications.</li>
+                <li><strong>Continuous Growth:</strong> To accelerate my learning and access advanced computational tools, I subscribed to Google AI Pro in August 2026.</li>
+            </ul>
+        </section>
+
+        <!-- Physics Lectures Section -->
+        <section id="physics">
+            <h2>Physics Lectures & Resources</h2>
+            <p>Access class recordings, lecture sheets, and reference materials for Physics.</p>
+            
+            <div class="resource-grid">
+                <!-- Class Card 1 -->
+                <div class="resource-card">
+                    <h3>Class 01: Mechanics</h3>
+                    <span class="tag">Oct 15</span> <span class="tag">Chapter 1</span>
+                    <ul>
+                        <li>🎥 <a href="YOUR_GOOGLE_DRIVE_VIDEO_LINK_HERE" target="_blank">Watch Class Recording</a></li>
+                        <li>📄 <a href="YOUR_LECTURE_SHEET_LINK_HERE" target="_blank">Lecture Sheet (PDF)</a></li>
+                        <li>📚 <a href="YOUR_BOOK_PDF_LINK_HERE" target="_blank">Reference Book Chapter</a></li>
+                        <li>🔗 <a href="#" target="_blank">Extra Problem Set</a></li>
+                    </ul>
+                </div>
+
+                <!-- Class Card 2 -->
+                <div class="resource-card">
+                    <h3>Class 02: Thermodynamics</h3>
+                    <span class="tag">Oct 22</span> <span class="tag">Chapter 2</span>
+                    <ul>
+                        <li>🎥 <a href="YOUR_GOOGLE_DRIVE_VIDEO_LINK_HERE" target="_blank">Watch Class Recording</a></li>
+                        <li>📄 <a href="YOUR_LECTURE_SHEET_LINK_HERE" target="_blank">Lecture Sheet (PDF)</a></li>
+                        <li>📚 <a href="YOUR_BOOK_PDF_LINK_HERE" target="_blank">Reference Book Chapter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chemistry Lectures Section -->
+        <section id="chemistry">
+            <h2>Chemistry Lectures & Resources</h2>
+            <p>Materials and recordings for Applied Chemistry coursework.</p>
+
+            <div class="resource-grid">
+                <!-- Class Card 1 -->
+                <div class="resource-card">
+                    <h3>Class 01: Organic Synthesis</h3>
+                    <span class="tag">Lab Theory</span>
+                    <ul>
+                        <li>🎥 <a href="YOUR_GOOGLE_DRIVE_VIDEO_LINK_HERE" target="_blank">Watch Class Recording</a></li>
+                        <li>📄 <a href="YOUR_LECTURE_SHEET_LINK_HERE" target="_blank">Reaction Mechanisms Sheet</a></li>
+                        <li>📚 <a href="YOUR_BOOK_PDF_LINK_HERE" target="_blank">Textbook Reference</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- German Language Section -->
+        <section id="german">
+            <h2>German Lecture Playlist</h2>
+            <p>Resources and structured study materials for learning the German language.</p>
+            
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h3>Grammar & Vocabulary</h3>
+                    <span class="tag">A1 - B2 Level</span>
+                    <ul>
+                        <li>🎥 <a href="YOUR_GOOGLE_DRIVE_VIDEO_LINK_HERE" target="_blank">DW Learn German Resources</a></li>
+                        <li>📄 <a href="YOUR_LECTURE_SHEET_LINK_HERE" target="_blank">German Grammar A1 to B2 (PDF)</a></li>
+                        <li>📚 <a href="YOUR_BOOK_PDF_LINK_HERE" target="_blank">German Verb Drills</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Sarim Sadman Rafio. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
